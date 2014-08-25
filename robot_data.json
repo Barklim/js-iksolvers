@@ -1,0 +1,219 @@
+{
+  "robots": [
+    {
+      "robotname": "schunk-lwa3", 
+      "manipname": "arm_nogripper", 
+      "scene": "collada_robots/schunk-lwa3.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "rightarm", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "head", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/BumbleBee2LeftEyeLink", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/BumbleBee2RightEyeLink", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/ProsilicaLink", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/SR4000Link", 
+      "scene": "collada_robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "cob3-2", 
+      "manipname": "arm", 
+      "scene": "collada_robots/care-o-bot3.zae"
+    }, 
+    {
+      "robotname": "ManusArm-Left", 
+      "manipname": "leftarm", 
+      "scene": "collada_robots/exactdynamics-manusarmleft.zae"
+    }, 
+    {
+      "robotname": "youbot", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-youbot.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "rightarm", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "rightarm_torso", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "leftarm", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "leftarm_torso", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "head", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "head_torso", 
+      "scene": "collada_robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "BarrettWAM", 
+      "manipname": "arm", 
+      "scene": "collada_robots/barrett-wamhand.zae"
+    }, 
+    {
+      "robotname": "body", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-kr3-cr.zae"
+    }, 
+    {
+      "robotname": "PerMMA-Left", 
+      "manipname": "leftarm", 
+      "scene": "collada_robots/cmu-permma.zae"
+    }, 
+    {
+      "robotname": "kuka-kr5-r650", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-kr5-r650.zae"
+    }, 
+    {
+      "robotname": "wam4", 
+      "manipname": "arm", 
+      "scene": "collada_robots/barrett-wam4.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm_camera", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm_camera", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "head_torso", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "head", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm_torso", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm_torso", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm", 
+      "scene": "collada_robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "kr30l16", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-kr30l16.zae"
+    }, 
+    {
+      "robotname": "kuka-kr5-r850", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-kr5-r850.zae"
+    }, 
+    {
+      "robotname": "Katana6M180", 
+      "manipname": "arm", 
+      "scene": "collada_robots/neuronics-katana.zae"
+    }, 
+    {
+      "robotname": "Katana6M180", 
+      "manipname": "armgrasp", 
+      "scene": "collada_robots/neuronics-katana.zae"
+    }, 
+    {
+      "robotname": "Mitsubishi-PA10", 
+      "manipname": "arm_nogripper", 
+      "scene": "collada_robots/mitsubishi-pa10.zae"
+    }, 
+    {
+      "robotname": "BarrettHand", 
+      "manipname": "hand", 
+      "scene": "collada_robots/barrett-hand.zae"
+    }, 
+    {
+      "robotname": "youBot", 
+      "manipname": "arm", 
+      "scene": "collada_robots/kuka-youbot-hires.zae"
+    }, 
+    {
+      "robotname": "DARWIN", 
+      "manipname": "leftarm", 
+      "scene": "collada_robots/romela-darwin-op.zae"
+    }, 
+    {
+      "robotname": "DARWIN", 
+      "manipname": "rightarm", 
+      "scene": "collada_robots/romela-darwin-op.zae"
+    }, 
+    {
+      "robotname": "PUMA", 
+      "manipname": "arm_nogripper", 
+      "scene": "collada_robots/unimation-pumaarm.zae"
+    }, 
+    {
+      "robotname": "smart_arm", 
+      "manipname": "arm", 
+      "scene": "collada_robots/crustcrawler-ax12.zae"
+    }, 
+    {
+      "robotname": "WAM7", 
+      "manipname": "arm", 
+      "scene": "collada_robots/barrett-wam.zae"
+    }, 
+    {
+      "robotname": "body", 
+      "manipname": "arm", 
+      "scene": "collada_robots/universalrobots-ur6-85-5-a.zae"
+    }, 
+    {
+      "robotname": "ShadowHand", 
+      "manipname": "hand", 
+      "scene": "collada_robots/shadow-hand.zae"
+    }
+  ]
+}
