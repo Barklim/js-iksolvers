@@ -2,6 +2,10 @@ import openravepy
 
 from optparse import OptionParser
 import os, errno
+import shutil
+
+import logging
+logging.basicConfig()
 
 def mkdir_p(path):
     try:
@@ -31,10 +35,10 @@ def run(args=None):
     ikmodel = openravepy.databases.inversekinematics.InverseKinematicsModel(robot, iktype=openravepy.IkParameterization.Type.Transform6D)
     if not ikmodel.load():
         ikmodel.autogenerate()
-
+    
     # copy the file locally
-    ikmodel.getsourcefilename()
-    # from IPython.terminal import embed; ipshell=embed.InteractiveShellEmbed(config=embed.load_default_config())(local_ns=locals())
+    solverpath = './solvers/' + options.robotname + '-' + options.manipname + '.cpp'
+    shutil.copyfile(ikmodel.getsourcefilename(), solverpath)
 
 if __name__ == "__main__":
     run()
