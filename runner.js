@@ -2,7 +2,7 @@ var async = require('async');
 var _ = require('lodash');
 var spawn = require('child_process').spawn
 
-var invokeGenerator = function(data, callback) {
+var runCommand = function(command, args, callback) {
   var args = _.map(data, function(val, key) {
     return '--' + key + '=' + val
   });
@@ -29,8 +29,17 @@ var invokeGenerator = function(data, callback) {
   });
 };
 
+var invokeIKGenerator = function(data, callback) {
+  var args = _.map(data, function(val, key) {
+    return '--' + key + '=' + val
+  });
+  var cmd = runCommand('python', ['solver_generator.py'].concat(args), callback);
+};
+
+
+
 var data = require('jsonfile').readFileSync('collada_robots_data.json').robots;
 
-async.eachLimit(data, 4, invokeGenerator, function() {
+async.eachLimit(data, 3, invokeGenerator, function() {
   console.log('done');
 });
