@@ -1,0 +1,219 @@
+{
+  "robots": [
+    {
+      "robotname": "wam4", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/barrett-wam4.zae"
+    }, 
+    {
+      "robotname": "ShadowHand", 
+      "manipname": "hand", 
+      "scene": "/home/ld/js-iksolvers/robots/shadow-hand.zae"
+    }, 
+    {
+      "robotname": "ManusArm-Left", 
+      "manipname": "leftarm", 
+      "scene": "/home/ld/js-iksolvers/robots/exactdynamics-manusarmleft.zae"
+    }, 
+    {
+      "robotname": "WAM7", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/barrett-wam.zae"
+    }, 
+    {
+      "robotname": "PUMA", 
+      "manipname": "arm_nogripper", 
+      "scene": "/home/ld/js-iksolvers/robots/unimation-pumaarm.zae"
+    }, 
+    {
+      "robotname": "Mitsubishi-PA10", 
+      "manipname": "arm_nogripper", 
+      "scene": "/home/ld/js-iksolvers/robots/mitsubishi-pa10.zae"
+    }, 
+    {
+      "robotname": "kuka-kr5-r850", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-kr5-r850.zae"
+    }, 
+    {
+      "robotname": "smart_arm", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/crustcrawler-ax12.zae"
+    }, 
+    {
+      "robotname": "body", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-kr3-cr.zae"
+    }, 
+    {
+      "robotname": "DARWIN", 
+      "manipname": "leftarm", 
+      "scene": "/home/ld/js-iksolvers/robots/romela-darwin-op.zae"
+    }, 
+    {
+      "robotname": "DARWIN", 
+      "manipname": "rightarm", 
+      "scene": "/home/ld/js-iksolvers/robots/romela-darwin-op.zae"
+    }, 
+    {
+      "robotname": "BarrettWAM", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/barrett-wamhand.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "rightarm", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "head", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/BumbleBee2LeftEyeLink", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/BumbleBee2RightEyeLink", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/ProsilicaLink", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "darpa_arm_robot", 
+      "manipname": "DarmSim/SR4000Link", 
+      "scene": "/home/ld/js-iksolvers/robots/darpa-arm.zae"
+    }, 
+    {
+      "robotname": "body", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/universalrobots-ur6-85-5-a.zae"
+    }, 
+    {
+      "robotname": "Katana6M180", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/neuronics-katana.zae"
+    }, 
+    {
+      "robotname": "Katana6M180", 
+      "manipname": "armgrasp", 
+      "scene": "/home/ld/js-iksolvers/robots/neuronics-katana.zae"
+    }, 
+    {
+      "robotname": "youBot", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-youbot-hires.zae"
+    }, 
+    {
+      "robotname": "cob3-2", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/care-o-bot3.zae"
+    }, 
+    {
+      "robotname": "kr30l16", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-kr30l16.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm_camera", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm_camera", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "head_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "head", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "rightarm", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "pr2", 
+      "manipname": "leftarm", 
+      "scene": "/home/ld/js-iksolvers/robots/willowgarage-pr2.zae"
+    }, 
+    {
+      "robotname": "PerMMA-Left", 
+      "manipname": "leftarm", 
+      "scene": "/home/ld/js-iksolvers/robots/cmu-permma.zae"
+    }, 
+    {
+      "robotname": "kuka-kr5-r650", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-kr5-r650.zae"
+    }, 
+    {
+      "robotname": "BarrettHand", 
+      "manipname": "hand", 
+      "scene": "/home/ld/js-iksolvers/robots/barrett-hand.zae"
+    }, 
+    {
+      "robotname": "schunk-lwa3", 
+      "manipname": "arm_nogripper", 
+      "scene": "/home/ld/js-iksolvers/robots/schunk-lwa3.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "rightarm", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "rightarm_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "leftarm", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "leftarm_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "head", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "HiroNX", 
+      "manipname": "head_torso", 
+      "scene": "/home/ld/js-iksolvers/robots/kawada-hironx.zae"
+    }, 
+    {
+      "robotname": "youbot", 
+      "manipname": "arm", 
+      "scene": "/home/ld/js-iksolvers/robots/kuka-youbot.zae"
+    }
+  ]
+}
