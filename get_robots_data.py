@@ -8,7 +8,7 @@ def run(args=None):
         'robots': []
     }
 
-    (_, _, filenames) = os.walk('collada_robots').next()
+    (_, _, filenames) = os.walk('robots').next()
     for f in filenames:
         filename = os.path.abspath(os.path.join('robots', f))
         print 'loading from ' + filename

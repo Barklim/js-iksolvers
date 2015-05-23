@@ -27,7 +27,7 @@ var runCommand = function(command, args, callback) {
   });
 };
 
-var invokeIKGenerator = function(data, callback) {
+var invokeGenerator = function(data, callback) {
   var args = _.map(data, function(val, key) {
     return '--' + key + '=' + val;
   });
@@ -40,19 +40,25 @@ var invokeEmscripten = function(data, callback) {
   var jsPath = basePath + '.js';
   fs.exists(cppPath, function(exists) {
     if (exists) {
-      var cmd = runCommand('em++', ['-O3', '-o', jsPath, cppPath], callback);
+      var cmd = runCommand('em++', [
+        '-O0',
+        '-s', 'INVOKE_RUN=0',
+        '-s', 'NO_EXIT_RUNTIME=1',
+        '-s', 'NO_FILESYSTEM=1',
+        '-s', 'NO_BROWSER=1',
+        '-o', jsPath, cppPath], callback);
     } else {
       callback(null);
     }
   });
 };
 
-var data = require('jsonfile').readFileSync('collada_robots_data.json').robots;
+var data = require('jsonfile').readFileSync('robots_data.json').robots;
 
 // async.eachLimit(data, 3, invokeGenerator, function() {
   // console.log('done');
 // });
 
-async.eachLimit(data, 3, invokeEmscripten, function() {
+async.eachLimit(data, 4, invokeEmscripten, function() {
   console.log('done');
 });
