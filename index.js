@@ -1,16 +1,17 @@
 var fs = require('fs');
 var jsonfile = require('jsonfile');
 
-var robotsDataFile = 'robots_data.json';
-var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+var robotsData = jsonfile.readFileSync('robots_data.json').robots;
 
+require('events').EventEmitter.defaultMaxListeners = robotsData.length;
 
-var log = console.log;
-console.log = function () {
-  log.call(this, 'My Console!!!');
-  log.apply(this, Array.prototype.slice.call(arguments));
-};
+// var log = console.log;
+// console.log = function () {
+  // log.call(this, 'My Console!!!');
+  // log.apply(this, Array.prototype.slice.call(arguments));
+// };
 
 robotsData.forEach(function(data) {
-  module.exports[data.robotname + '-' + data.manipname] = require(data.basePath)
+  var robotModuleName = data.robotname + '_' + data.manipname;
+  module.exports[robotModuleName] = require(data.basePath);
 });
