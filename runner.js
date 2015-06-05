@@ -2,6 +2,10 @@ var async = require('async');
 var _ = require('lodash');
 var spawn = require('child_process').spawn;
 var fs = require('fs');
+var jsonfile = require('jsonfile');
+
+var robotsDataFile = 'robots_data.json';
+var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
 
 var runCommand = function(command, args, callback) {
   var cmd = spawn(command, args);
@@ -27,7 +31,7 @@ var runCommand = function(command, args, callback) {
   });
 };
 
-var invokeGenerator = function(data, callback) {
+var invokeSolverGenerator = function(data, callback) {
   var args = _.map(data, function(val, key) {
     return '--' + key + '=' + val;
   });
@@ -41,7 +45,7 @@ var invokeEmscripten = function(data, callback) {
   fs.exists(cppPath, function(exists) {
     if (exists) {
       var cmd = runCommand('em++', [
-        '-O0',
+        '-O1',
         '-s', 'INVOKE_RUN=0',
         '-s', 'NO_EXIT_RUNTIME=1',
         '-s', 'NO_FILESYSTEM=1',
@@ -53,12 +57,38 @@ var invokeEmscripten = function(data, callback) {
   });
 };
 
-var data = require('jsonfile').readFileSync('robots_data.json').robots;
+var rewriteRobotsData = function() {
 
-// async.eachLimit(data, 3, invokeGenerator, function() {
-  // console.log('done');
+  var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+
+  var robots = [];
+  robotsData.forEach(function(data) {
+    var basePath = './solvers/' + data.robotname + '-' + data.manipname;
+    var cppPath = basePath + '.cpp';
+
+    if (fs.existsSync(cppPath)) {
+      data.basePath = basePath;
+      robots.push(data);
+    }
+  });
+
+  jsonfile.writeFileSync(robotsDataFile, {
+    robots: robots
+  });
+};
+
+var appendExportsToSolver = function(data, callback) {
+  var solverExports = '\nmodule.exports = Module._main;\n';
+  fs.appendFile(data.basePath + '.js', solverExports, function (err) {
+    callback(null)
+  });
+};
+
+// async.eachLimit(data, 3, invokeSolverGenerator, function() {
+  async.eachLimit(robotsData, 4, invokeEmscripten, function() {
+    rewriteRobotsData();
+    async.eachLimit(robotsData, 4, appendExportsToSolver, function() {
+      console.log('done');
+    });
+  });
 // });
-
-async.eachLimit(data, 4, invokeEmscripten, function() {
-  console.log('done');
-});

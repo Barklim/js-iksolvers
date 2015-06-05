@@ -10,7 +10,7 @@ def run(args=None):
 
     (_, _, filenames) = os.walk('robots').next()
     for f in filenames:
-        filename = os.path.abspath(os.path.join('robots', f))
+        filename = os.path.join('robots', f)
         print 'loading from ' + filename
         env = openravepy.Environment()
         env.Load(filename)
