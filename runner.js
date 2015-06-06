@@ -67,6 +67,7 @@ var invokeEmscripten = function(data, callback) {
         '-s', 'NO_EXIT_RUNTIME=1',
         '-s', 'NO_FILESYSTEM=1',
         '-s', 'NO_BROWSER=1',
+        '-s', "EXPORTED_FUNCTIONS=['_main','_ComputeFk']",
 
         '-o', jsPath], function() {
           fs.unlinkSync(tmpPath)
