@@ -24,6 +24,8 @@ def run(args=None):
                       help='name of robotname to use (default=%default)')
     parser.add_option('--manipname',action="store",type='string',dest='manipname',default=None,
                       help='name of manipulator to use (default=%default)')
+    parser.add_option('--basepath',action="store",type='string',dest='b',default=None,
+                      help='dummy (default=%default)')
     (options, leftargs) = parser.parse_args(args=args)
 
     env = openravepy.Environment()
@@ -37,7 +39,7 @@ def run(args=None):
         ikmodel.autogenerate()
     
     # copy the file locally
-    solverpath = './solvers/' + options.robotname + '-' + options.manipname + '.cpp'
+    solverpath = './solvers/' + options.robotname + '_' + options.manipname + '.cpp'
     shutil.copyfile(ikmodel.getsourcefilename(), solverpath)
 
 if __name__ == "__main__":

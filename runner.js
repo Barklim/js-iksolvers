@@ -3,13 +3,17 @@ var _ = require('lodash');
 var spawn = require('child_process').spawn;
 var fs = require('fs');
 var jsonfile = require('jsonfile');
+jsonfile.spaces = 2;
 
 var robotsDataFile = 'robots_data.json';
-var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
 
 var numCores = require('os').cpus().length;
+var numJobs = parseInt(numCores / 2);
+console.log('numJobs', numJobs);
 
-var runCommand = function(command, args, callback) {
+var runCommand = function(command, args, callback, _timeout) {
+  _timeout = _timeout || 12 * 60 * 60 * 1000; // 12 hours
+
   var cmd = spawn(command, args);
 
   var printData = function(data) {
@@ -24,7 +28,7 @@ var runCommand = function(command, args, callback) {
     cmd.stdin.pause();
     cmd.kill();
     callback(null);
-  }, 12 * 60 * 60 * 1000); // let it run for 12 hours before killing it!
+  }, _timeout);
 
   cmd.on('close', function(code) {
     console.log('child process exited with code ' + code);
@@ -37,21 +41,21 @@ var invokeSolverGenerator = function(data, callback) {
   var args = _.map(data, function(val, key) {
     return '--' + key + '=' + val;
   });
-  var cmd = runCommand('python', ['solver_generator.py'].concat(args), callback);
+  var cmd = runCommand('python', ['solver_generator.py'].concat(args), callback, 10000);
 };
 
 var invokeEmscripten = function(data, callback) {
   var solverPath = './solvers/';
-  var basePath = solverPath + data.robotname + '-' + data.manipname;
-  var mainPath = solverPath + './main.cpp';
+  var basePath = solverPath + data.robotname + '_' + data.manipname;
+  var mainPath = solverPath + '/main.cpp';
   var cppPath = basePath + '.cpp';
-  var tmpPath = basePath + '.tmp.cpp'
+  var tmpPath = basePath + '.tmp.cpp';
   var jsPath = basePath + '.js';
   fs.exists(cppPath, function(exists) {
     if (exists) {
-      
-      fs.writeFileSync(tmpPath, fs.readFileSync(cppPath) + fs.readFileSync(mainPath))
-  
+
+      fs.writeFileSync(tmpPath, fs.readFileSync(cppPath) + fs.readFileSync(mainPath));
+
       var cmd = runCommand('em++', [
 
         '-O1',
@@ -70,13 +74,17 @@ var invokeEmscripten = function(data, callback) {
         '-s', "EXPORTED_FUNCTIONS=['_main','_ComputeFk']",
 
         '-o', jsPath], function() {
-          fs.unlinkSync(tmpPath)
-          callback(null)
+          fs.unlinkSync(tmpPath);
+          callback(null);
         });
     } else {
       callback(null);
     }
   });
+};
+
+var getRobotsData = function(callback) {
+  runCommand('python', ['get_robots_data.py'], callback);
 };
 
 var rewriteRobotsData = function() {
@@ -85,7 +93,7 @@ var rewriteRobotsData = function() {
 
   var robots = [];
   robotsData.forEach(function(data) {
-    var basePath = './solvers/' + data.robotname + '-' + data.manipname;
+    var basePath = './solvers/' + data.robotname + '_' + data.manipname;
     var cppPath = basePath + '.cpp';
 
     if (fs.existsSync(cppPath)) {
@@ -99,9 +107,12 @@ var rewriteRobotsData = function() {
   });
 };
 
-// async.eachLimit(data, numCores, invokeSolverGenerator, function() {
-  async.eachLimit(robotsData, numCores, invokeEmscripten, function() {
-    rewriteRobotsData();
-    console.log('done');
+getRobotsData(function() {
+  var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+  async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
+    async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
+      rewriteRobotsData();
+      console.log('done');
+    });
   });
-// });
+});
