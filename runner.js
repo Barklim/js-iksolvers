@@ -12,7 +12,8 @@ var numJobs = parseInt(numCores / 2);
 console.log('numJobs', numJobs);
 
 var runCommand = function(command, args, callback, _timeout) {
-  _timeout = _timeout || 12 * 60 * 60 * 1000; // 12 hours
+  // _timeout = _timeout || 12 * 60 * 60 * 1000; // 12 hours
+  _timeout = _timeout || 30 * 60 * 1000; // 30 minutes
 
   var cmd = spawn(command, args);
 
@@ -41,7 +42,7 @@ var invokeSolverGenerator = function(data, callback) {
   var args = _.map(data, function(val, key) {
     return '--' + key + '=' + val;
   });
-  var cmd = runCommand('python', ['solver_generator.py'].concat(args), callback, 10000);
+  var cmd = runCommand('python', ['solver_generator.py'].concat(args), callback);
 };
 
 var invokeEmscripten = function(data, callback) {
@@ -65,7 +66,7 @@ var invokeEmscripten = function(data, callback) {
 
         tmpPath,
 
-        // emscripten
+        // emscripten, 100
         '--post-js', 'post.js',
         '-s', 'INVOKE_RUN=0',
         '-s', 'NO_EXIT_RUNTIME=1',
