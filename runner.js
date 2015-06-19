@@ -54,12 +54,16 @@ var invokeEmscripten = function(data, callback) {
   var jsPath = basePath + '.js';
   fs.exists(cppPath, function(exists) {
     if (exists) {
+      
+      var cpp = fs.readFileSync(cppPath)
+      var main = fs.readFileSync(mainPath)
+      var program = cpp + '\n' + main;
 
-      fs.writeFileSync(tmpPath, fs.readFileSync(cppPath) + fs.readFileSync(mainPath));
+      fs.writeFileSync(tmpPath, program);
 
       var cmd = runCommand('em++', [
 
-        '-O1',
+        '-O0',
 
         // ikfast
         '-DIKFAST_NO_MAIN',
@@ -75,7 +79,11 @@ var invokeEmscripten = function(data, callback) {
         '-s', "EXPORTED_FUNCTIONS=['_main','_ComputeFk']",
 
         '-o', jsPath], function() {
-          fs.unlinkSync(tmpPath);
+          try {
+            
+            fs.unlinkSync(tmpPath);
+          } catch (e) {
+          }
           callback(null);
         });
     } else {
