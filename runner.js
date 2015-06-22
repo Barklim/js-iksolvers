@@ -9,6 +9,7 @@ var robotsDataFile = 'robots_data.json';
 
 var numCores = require('os').cpus().length;
 var numJobs = parseInt(numCores / 2);
+// var numJobs = 1;
 console.log('numJobs', numJobs);
 
 var runCommand = function(command, args, callback, _timeout) {
@@ -70,20 +71,22 @@ var invokeEmscripten = function(data, callback) {
 
         tmpPath,
 
-        // emscripten, 100
+        // emscripten (https://github.com/kripken/emscripten/blob/1.33.2/src/settings.js)
         '--post-js', 'post.js',
         '-s', 'INVOKE_RUN=0',
         '-s', 'NO_EXIT_RUNTIME=1',
         '-s', 'NO_FILESYSTEM=1',
         '-s', 'NO_BROWSER=1',
-        '-s', "EXPORTED_FUNCTIONS=['_main','_ComputeFk']",
+        '-s', 'EXPORT_ALL=1',
+        // '-s', "EXPORTED_FUNCTIONS=\"['_main','_ComputeFk']\"",
 
         '-o', jsPath], function() {
           try {
-            
             fs.unlinkSync(tmpPath);
           } catch (e) {
           }
+          console.log('Done ' + jsPath)
+          // process.exit(0)
           callback(null);
         });
     } else {
@@ -116,12 +119,12 @@ var rewriteRobotsData = function() {
   });
 };
 
-getRobotsData(function() {
+// getRobotsData(function() {
   var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
-  async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
+  // async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
     async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
       rewriteRobotsData();
       console.log('done');
     });
-  });
-});
+  // });
+// });

@@ -13,5 +13,6 @@ require('events').EventEmitter.defaultMaxListeners = robotsData.length;
 
 robotsData.forEach(function(data) {
   var robotModuleName = data.robotname + '_' + data.manipname;
+  console.log('loading ' + robotModuleName);
   module.exports[robotModuleName] = require(data.basePath);
 });

@@ -1,11 +1,11 @@
-int main(int argc, char** argv)
+std::vector<IkReal> TrueComputeIk(int argc, char** argv)
 {
+    std::vector<IkReal> solvalues(GetNumJoints());
     if( argc != 12+GetNumFreeParameters()+1 ) {
         printf("\nKAKAKAK Usage: ./ik r00 r01 r02 t0 r10 r11 r12 t1 r20 r21 r22 t2 free0 ...\n\n"
                "Returns the ik solutions given the transformation of the end effector specified by\n"
                "a 3x3 rotation R (rXX), and a 3x1 translation (tX).\n"
                "There are %d free parameters that have to be specified.\n\n",GetNumFreeParameters());
-        return 1;
     }
 
     IkSolutionList<IkReal> solutions;
@@ -20,11 +20,9 @@ int main(int argc, char** argv)
 
     if( !bSuccess ) {
         fprintf(stderr,"Failed to get ik solution\n");
-        return -1;
     }
 
     printf("Found %d ik solutions:\n", (int)solutions.GetNumSolutions());
-    std::vector<IkReal> solvalues(GetNumJoints());
     for(std::size_t i = 0; i < solutions.GetNumSolutions(); ++i) {
         const IkSolutionBase<IkReal>& sol = solutions.GetSolution(i);
         printf("sol%d (free=%d): ", (int)i, (int)sol.GetFree().size());
@@ -34,5 +32,5 @@ int main(int argc, char** argv)
             printf("%.15f, ", solvalues[j]);
         printf("\n");
     }
-    return 0;
+    return solvalues;
 }
