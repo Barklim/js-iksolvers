@@ -1,2 +1,2 @@
-Module = {};
+var Module = {};
 Module['memoryInitializerPrefixURL'] = './solvers/';

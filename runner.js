@@ -82,11 +82,8 @@ var invokeEmscripten = function(data, callback) {
         '-s', 'NO_BROWSER=1',
         '-s', 'PRECISE_F32=1',
         '-s', 'DEMANGLE_SUPPORT=1',
-        // '-s', 'MEMORY_INITIALIZER_PREFIX_URL="./solvers"',
-        // '-s', 'memoryInitializerPrefixURL="./solvers"',
         // '-s', 'EXPORT_ALL=1',
         '-s', "EXPORTED_FUNCTIONS=['__Z16ComputeFkWrapperPKd', '__Z12GetNumJointsv']",
-        //'-s', "EXPORTED_FUNCTIONS=['_main', '__Z16ComputeFkWrapperPKd']",
 
         '-o', jsPath], function() {
           try {

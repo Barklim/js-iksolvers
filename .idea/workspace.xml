@@ -58,8 +58,18 @@
       <file leaf-file-name="runner.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/runner.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.85597825">
-              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.17119566">
+              <caret line="70" column="27" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pre.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pre.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -69,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -89,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/post.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -108,12 +118,9 @@
       <file leaf-file-name="robots_data.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robots_data.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-168.0">
-              <caret line="252" column="29" selection-start-line="252" selection-start-column="29" selection-end-line="252" selection-end-column="29" />
-              <folding>
-                <marker date="1437124909391" expanded="true" signature="14:42" placeholder="[...]" />
-                <marker date="1437124909391" expanded="true" signature="20:42" placeholder="{&quot;robotname&quot;: &quot;BarrettWAM&quot;...}" />
-              </folding>
+            <state vertical-scroll-proportion="-6.111111">
+              <caret line="157" column="6" selection-start-line="157" selection-start-column="6" selection-end-line="157" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -154,14 +161,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/solvers/main.cpp" />
-        <option value="$PROJECT_DIR$/pre.js" />
         <option value="$PROJECT_DIR$/post.js" />
         <option value="$PROJECT_DIR$/solvers/post.cpp" />
-        <option value="$PROJECT_DIR$/post.cpp" />
-        <option value="$PROJECT_DIR$/robots_data.json" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/runner.js" />
+        <option value="$PROJECT_DIR$/pre.js" />
+        <option value="$PROJECT_DIR$/post.cpp" />
+        <option value="$PROJECT_DIR$/test.js" />
+        <option value="$PROJECT_DIR$/robots_data.json" />
       </list>
     </option>
   </component>
@@ -221,7 +228,7 @@
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="FullScreen" value="false" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="in&#9;FILE&#9;file:///home/ld/js-iksolvers/index.js&#10;post&#9;FILE&#9;file:///home/ld/js-iksolvers/post.cpp&#10;ik&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/ikfast.h&#10;BARRE&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.js&#10;BarrettWAM_arm&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.js&#10;ROBOT&#9;FILE&#9;file:///home/ld/js-iksolvers/robots_data.json&#10;post.cpp&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/post.cpp&#10;barre&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/barrettwam-dual_l_arm.js&#10;man1_leftarm&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/man1_leftarm.js&#10;tes&#9;FILE&#9;file:///home/ld/js-iksolvers/test.js&#10;ba&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.cpp&#10;.cpp&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/post.cpp&#10;solver&#9;FILE&#9;file:///home/ld/js-iksolvers/solver_generator.py&#10;POST&#9;FILE&#9;file:///home/ld/js-iksolvers/post.js&#10;MAIN&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/main.cpp&#10;runn&#9;FILE&#9;file:///home/ld/js-iksolvers/runner.js" />
+    <property name="SearchEverywhereHistoryKey" value="ROBOT&#9;FILE&#9;file:///home/ld/js-iksolvers/robots_data.json&#10;PRE&#9;FILE&#9;file:///home/ld/js-iksolvers/pre.js&#10;in&#9;FILE&#9;file:///home/ld/js-iksolvers/index.js&#10;post&#9;FILE&#9;file:///home/ld/js-iksolvers/post.cpp&#10;ik&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/ikfast.h&#10;BARRE&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.js&#10;BarrettWAM_arm&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.js&#10;post.cpp&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/post.cpp&#10;barre&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/barrettwam-dual_l_arm.js&#10;man1_leftarm&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/man1_leftarm.js&#10;tes&#9;FILE&#9;file:///home/ld/js-iksolvers/test.js&#10;ba&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/BarrettWAM_arm.cpp&#10;.cpp&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/post.cpp&#10;solver&#9;FILE&#9;file:///home/ld/js-iksolvers/solver_generator.py&#10;POST&#9;FILE&#9;file:///home/ld/js-iksolvers/post.js&#10;MAIN&#9;FILE&#9;file:///home/ld/js-iksolvers/solvers/main.cpp&#10;runn&#9;FILE&#9;file:///home/ld/js-iksolvers/runner.js" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
@@ -347,10 +354,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="43" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="43" />
-          <folding>
-            <marker date="1437124909391" expanded="true" signature="14:42" placeholder="[...]" />
-            <marker date="1437124909391" expanded="true" signature="20:42" placeholder="{&quot;robotname&quot;: &quot;BarrettWAM&quot;...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -398,10 +402,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-          <folding>
-            <marker date="1437124909391" expanded="true" signature="14:42" placeholder="[...]" />
-            <marker date="1437124909391" expanded="true" signature="20:42" placeholder="{&quot;robotname&quot;: &quot;BarrettWAM&quot;...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -428,21 +429,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pre.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/post.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/solvers/BarrettWAM_arm.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -459,25 +445,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/post.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robots_data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-168.0">
-          <caret line="252" column="29" selection-start-line="252" selection-start-column="29" selection-end-line="252" selection-end-column="29" />
-          <folding>
-            <marker date="1437124909391" expanded="true" signature="14:42" placeholder="[...]" />
-            <marker date="1437124909391" expanded="true" signature="20:42" placeholder="{&quot;robotname&quot;: &quot;BarrettWAM&quot;...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.5">
@@ -486,18 +453,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pre.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/post.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/post.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robots_data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="157" column="6" selection-start-line="157" selection-start-column="6" selection-end-line="157" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/runner.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85597825">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.17119566">
+          <caret line="70" column="27" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="27" />
           <folding />
         </state>
       </provider>

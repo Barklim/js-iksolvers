@@ -22,12 +22,21 @@ solvers.solverIds.forEach(function (solverId) {
     var makeArray = function(len) {
         var r = [];
         for (var i = 0; i < len; i++) {
-            r.push(0.01);
+            //r.push(0.0);
+            r.push(0.0);
         }
         return r;
     };
 
     var results = [];
+
+    var j = makeArray(numJoints);
+    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
+    var j = makeArray(numJoints);
+    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
+    var j = makeArray(numJoints);
+    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
+
 
     for (var i = 0; i < tries; i++) {
 
@@ -47,12 +56,24 @@ solvers.solverIds.forEach(function (solverId) {
     }
 
 
-    for (var i = 0; i < results.length - 1; i++) {
+    for (var i = 2; i < results.length - 1; i++) {
         var resulti = results[i];
         for (var j = i + 1; j < results.length; j++) {
             var resultj = results[j];
-            for (var k = 0; k < resulti.result.length; k++) {
-                var diff = Math.abs(resulti.result[k] - resultj.result[k]);
+
+            if (resulti.result.length !== resultj.result.length) {
+                throw new Error('Shitfuck your things are the wrong sizes')
+            }
+
+            for (var k = 0; k < 3; k++) {
+                var bigger = resulti.result[k] > resultj.result[k] ? resulti.result[k] : resultj.result[k]
+                var smaller = resulti.result[k] < resultj.result[k] ? resulti.result[k] : resultj.result[k]
+
+                if (bigger == smaller) {
+                    return
+                }
+
+                var diff = Math.abs(bigger) - Math.abs(smaller);
 
                 if (diff > maxdiff) {
                     solverName = solverId
@@ -83,3 +104,11 @@ console.log('maxdiffresultj', maxdiffresultj);
 //console.log('mindiffk', mindiffk);
 //console.log('mindiffresulti', mindiffresulti);
 //console.log('mindiffresultj', mindiffresultj);
+//
+//var trans = [10, 20, 30]
+//var rot = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+//var both = trans.concat(rot)
+//for(var i = 0; i < 3 + 9 - 2; ++i) {
+//    console.log(both[i])
+//}
+//console.log(both[3 + 9 - 1])

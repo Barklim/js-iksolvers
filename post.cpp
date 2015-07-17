@@ -5,13 +5,10 @@ char* ComputeFkWrapper(const IkReal* j) {
     char buffer [256] = {0};
     ComputeFk(j, eetrans, eerot);
     for(int i = 0; i < 3; ++i)
-        res[i] = eetrans[i];
-    for(int i = 0; i < 9; ++i)
-        res[i + 3] = eerot[i];
-    for(int i = 0; i < 3 + 9 - 1; ++i) {
-        sprintf(buffer + strlen(buffer), "%.15f,", res[i]);
-    }
-    sprintf(buffer + strlen(buffer), "%.15f", res[9 - 1]);
+        sprintf(buffer + strlen(buffer), "%.15f,", eetrans[i]);
+    for(int i = 0; i < 9 - 1; ++i)
+        sprintf(buffer + strlen(buffer), "%.15f,", eerot[i]);
+    sprintf(buffer + strlen(buffer), "%.15f", eerot[9 - 1]);
     return buffer;
 }
 
