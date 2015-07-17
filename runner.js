@@ -49,22 +49,23 @@ var invokeSolverGenerator = function(data, callback) {
 var invokeEmscripten = function(data, callback) {
   var solverPath = './solvers/';
   var basePath = solverPath + data.robotname + '_' + data.manipname;
-  var mainPath = solverPath + '/main.cpp';
+  var postPath = './post.cpp';
   var cppPath = basePath + '.cpp';
   var tmpPath = basePath + '.tmp.cpp';
   var jsPath = basePath + '.js';
   fs.exists(cppPath, function(exists) {
     if (exists) {
-      
-      var cpp = fs.readFileSync(cppPath)
-      var main = fs.readFileSync(mainPath)
-      var program = cpp + '\n' + main;
+
+      var cpp = fs.readFileSync(cppPath);
+      var post = fs.readFileSync(postPath);
+      var program = cpp + '\n' + post;
 
       fs.writeFileSync(tmpPath, program);
 
       var cmd = runCommand('em++', [
 
-        '-O0',
+        //'-g',
+        '-O2',
 
         // ikfast
         '-DIKFAST_NO_MAIN',
@@ -72,20 +73,27 @@ var invokeEmscripten = function(data, callback) {
         tmpPath,
 
         // emscripten (https://github.com/kripken/emscripten/blob/1.33.2/src/settings.js)
+        '--pre-js', 'pre.js',
         '--post-js', 'post.js',
         '-s', 'INVOKE_RUN=0',
+        '-s', 'ASSERTIONS=1',
         '-s', 'NO_EXIT_RUNTIME=1',
         '-s', 'NO_FILESYSTEM=1',
         '-s', 'NO_BROWSER=1',
-        '-s', 'EXPORT_ALL=1',
-        // '-s', "EXPORTED_FUNCTIONS=\"['_main','_ComputeFk']\"",
+        '-s', 'PRECISE_F32=1',
+        '-s', 'DEMANGLE_SUPPORT=1',
+        // '-s', 'MEMORY_INITIALIZER_PREFIX_URL="./solvers"',
+        // '-s', 'memoryInitializerPrefixURL="./solvers"',
+        // '-s', 'EXPORT_ALL=1',
+        '-s', "EXPORTED_FUNCTIONS=['__Z16ComputeFkWrapperPKd', '__Z12GetNumJointsv']",
+        //'-s', "EXPORTED_FUNCTIONS=['_main', '__Z16ComputeFkWrapperPKd']",
 
         '-o', jsPath], function() {
           try {
             fs.unlinkSync(tmpPath);
           } catch (e) {
           }
-          console.log('Done ' + jsPath)
+          console.log('Done ' + jsPath);
           // process.exit(0)
           callback(null);
         });
@@ -119,7 +127,7 @@ var rewriteRobotsData = function() {
   });
 };
 
-// getRobotsData(function() {
+//getRobotsData(function() {
   var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
   // async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
     async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
@@ -127,4 +135,4 @@ var rewriteRobotsData = function() {
       console.log('done');
     });
   // });
-// });
+//});

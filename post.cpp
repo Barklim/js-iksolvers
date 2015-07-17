@@ -1,3 +1,20 @@
+char* ComputeFkWrapper(const IkReal* j) {
+    IkReal eetrans[3];
+    IkReal eerot[9];
+    IkReal res[3 + 9];
+    char buffer [256] = {0};
+    ComputeFk(j, eetrans, eerot);
+    for(int i = 0; i < 3; ++i)
+        res[i] = eetrans[i];
+    for(int i = 0; i < 9; ++i)
+        res[i + 3] = eerot[i];
+    for(int i = 0; i < 3 + 9 - 1; ++i) {
+        sprintf(buffer + strlen(buffer), "%.15f,", res[i]);
+    }
+    sprintf(buffer + strlen(buffer), "%.15f", res[9 - 1]);
+    return buffer;
+}
+
 std::vector<IkReal> TrueComputeIk(int argc, char** argv)
 {
     std::vector<IkReal> solvalues(GetNumJoints());

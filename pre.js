@@ -1,0 +1,2 @@
+Module = {};
+Module['memoryInitializerPrefixURL'] = './solvers/';

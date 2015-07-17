@@ -11,8 +11,21 @@ require('events').EventEmitter.defaultMaxListeners = robotsData.length;
   // log.apply(this, Array.prototype.slice.call(arguments));
 // };
 
+var solverPathMapping = {};
 robotsData.forEach(function(data) {
   var robotModuleName = data.robotname + '_' + data.manipname;
-  console.log('loading ' + robotModuleName);
-  module.exports[robotModuleName] = require(data.basePath);
+  solverPathMapping[robotModuleName] = data.basePath;
 });
+
+var solverIds = Object.keys(solverPathMapping);
+module.exports = {
+  solverIds: solverIds,
+  getSolver: function(robotModuleName) {
+    var solverPath = solverPathMapping[robotModuleName];
+    if (!solverPath) {
+      throw new Error('Can\'t find solver for ' + robotModuleName + '\n\nAvailable solvers:\n  ' + solverIds.join('\n  ') + '\n');
+    } else {
+      return require(solverPath);
+    }
+  }
+};
