@@ -31,28 +31,10 @@
       "basePath": "./solvers/ManusArm-Left_leftarm"
     },
     {
-      "robotname": "BarrettWAM",
-      "manipname": "arm",
-      "scene": "robots/barrettsegway.robot.xml",
-      "basePath": "./solvers/BarrettWAM_arm"
-    },
-    {
-      "robotname": "WAM7",
-      "manipname": "arm",
-      "scene": "robots/barrett-wam.zae",
-      "basePath": "./solvers/WAM7_arm"
-    },
-    {
       "robotname": "PUMA",
       "manipname": "arm_nogripper",
       "scene": "robots/unimation-pumaarm.zae",
       "basePath": "./solvers/PUMA_arm_nogripper"
-    },
-    {
-      "robotname": "barrettwam-dual",
-      "manipname": "l_arm",
-      "scene": "robots/barrettwam-dual.robot.xml",
-      "basePath": "./solvers/barrettwam-dual_l_arm"
     },
     {
       "robotname": "Mitsubishi-PA10",
@@ -61,40 +43,16 @@
       "basePath": "./solvers/Mitsubishi-PA10_arm_nogripper"
     },
     {
-      "robotname": "BarrettWAM",
-      "manipname": "arm",
-      "scene": "robots/barrett-wam-sensors.zae",
-      "basePath": "./solvers/BarrettWAM_arm"
-    },
-    {
       "robotname": "kuka-kr5-r850",
       "manipname": "arm",
       "scene": "robots/kuka-kr5-r850.zae",
       "basePath": "./solvers/kuka-kr5-r850_arm"
     },
     {
-      "robotname": "body",
-      "manipname": "arm",
-      "scene": "robots/kuka-kr3-cr.zae",
-      "basePath": "./solvers/body_arm"
-    },
-    {
-      "robotname": "BarrettWAM",
-      "manipname": "arm",
-      "scene": "robots/barrett-wamhand.zae",
-      "basePath": "./solvers/BarrettWAM_arm"
-    },
-    {
       "robotname": "darpa_arm_robot",
       "manipname": "rightarm",
       "scene": "robots/darpa-arm.zae",
       "basePath": "./solvers/darpa_arm_robot_rightarm"
-    },
-    {
-      "robotname": "body",
-      "manipname": "arm",
-      "scene": "robots/universalrobots-ur6-85-5-a.zae",
-      "basePath": "./solvers/body_arm"
     },
     {
       "robotname": "pr2",
@@ -119,12 +77,6 @@
       "manipname": "leftarm",
       "scene": "robots/pr2-beta-static.zae",
       "basePath": "./solvers/pr2_leftarm"
-    },
-    {
-      "robotname": "PUMA",
-      "manipname": "arm_nogripper",
-      "scene": "robots/pumaarm.zae",
-      "basePath": "./solvers/PUMA_arm_nogripper"
     },
     {
       "robotname": "schunk-lwa3-dual",
@@ -151,42 +103,6 @@
       "basePath": "./solvers/schunk-lwa3-dual_l_arm_nogripper"
     },
     {
-      "robotname": "BarrettWAM",
-      "manipname": "arm",
-      "scene": "robots/barrettwam.robot.xml",
-      "basePath": "./solvers/BarrettWAM_arm"
-    },
-    {
-      "robotname": "kr30l16",
-      "manipname": "arm",
-      "scene": "robots/kuka-kr30l16.zae",
-      "basePath": "./solvers/kr30l16_arm"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "rightarm_torso",
-      "scene": "robots/willowgarage-pr2.zae",
-      "basePath": "./solvers/pr2_rightarm_torso"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "rightarm",
-      "scene": "robots/willowgarage-pr2.zae",
-      "basePath": "./solvers/pr2_rightarm"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "leftarm_torso",
-      "scene": "robots/willowgarage-pr2.zae",
-      "basePath": "./solvers/pr2_leftarm_torso"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "leftarm",
-      "scene": "robots/willowgarage-pr2.zae",
-      "basePath": "./solvers/pr2_leftarm"
-    },
-    {
       "robotname": "PerMMA-Left",
       "manipname": "leftarm",
       "scene": "robots/cmu-permma.zae",
@@ -209,36 +125,6 @@
       "manipname": "arm_nogripper",
       "scene": "robots/schunk-lwa3.zae",
       "basePath": "./solvers/schunk-lwa3_arm_nogripper"
-    },
-    {
-      "robotname": "BarrettWAM",
-      "manipname": "arm",
-      "scene": "robots/barrettwam4.robot.xml",
-      "basePath": "./solvers/BarrettWAM_arm"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "rightarm_torso",
-      "scene": "robots/pr2-beta-sim.robot.xml",
-      "basePath": "./solvers/pr2_rightarm_torso"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "rightarm",
-      "scene": "robots/pr2-beta-sim.robot.xml",
-      "basePath": "./solvers/pr2_rightarm"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "leftarm_torso",
-      "scene": "robots/pr2-beta-sim.robot.xml",
-      "basePath": "./solvers/pr2_leftarm_torso"
-    },
-    {
-      "robotname": "pr2",
-      "manipname": "leftarm",
-      "scene": "robots/pr2-beta-sim.robot.xml",
-      "basePath": "./solvers/pr2_leftarm"
     },
     {
       "robotname": "PumaGripper",

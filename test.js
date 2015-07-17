@@ -1,6 +1,6 @@
 var solvers = require('./index');
 
-var solverName = 'asdsasa'
+var solverName = 'asdsasa';
 var maxdiff = 0.0;
 var maxdiffk;
 var maxdiffresulti;
@@ -11,8 +11,8 @@ var mindiffk;
 var mindiffresulti;
 var mindiffresultj;
 
-solvers.solverIds.forEach(function (solverId) {
-    console.log('solverId', solverId)
+solvers.solverIds.forEach(function(solverId) {
+    console.log('solverId', solverId);
     var solver = solvers.getSolver(solverId);
 
     var numJoints = solver.ccall('_Z12GetNumJointsv', 'int');
@@ -29,14 +29,6 @@ solvers.solverIds.forEach(function (solverId) {
     };
 
     var results = [];
-
-    var j = makeArray(numJoints);
-    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
-    var j = makeArray(numJoints);
-    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
-    var j = makeArray(numJoints);
-    var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
-
 
     for (var i = 0; i < tries; i++) {
 
@@ -62,21 +54,21 @@ solvers.solverIds.forEach(function (solverId) {
             var resultj = results[j];
 
             if (resulti.result.length !== resultj.result.length) {
-                throw new Error('Shitfuck your things are the wrong sizes')
+                throw new Error('Shitfuck your things are the wrong sizes');
             }
 
             for (var k = 0; k < 3; k++) {
-                var bigger = resulti.result[k] > resultj.result[k] ? resulti.result[k] : resultj.result[k]
-                var smaller = resulti.result[k] < resultj.result[k] ? resulti.result[k] : resultj.result[k]
+                var bigger = resulti.result[k] > resultj.result[k] ? resulti.result[k] : resultj.result[k];
+                var smaller = resulti.result[k] < resultj.result[k] ? resulti.result[k] : resultj.result[k];
 
                 if (bigger == smaller) {
-                    return
+                    return;
                 }
 
                 var diff = Math.abs(bigger) - Math.abs(smaller);
 
                 if (diff > maxdiff) {
-                    solverName = solverId
+                    solverName = solverId;
                     maxdiff = diff;
                     maxdiffk = k;
                     maxdiffresulti = resulti;
@@ -93,12 +85,12 @@ solvers.solverIds.forEach(function (solverId) {
         }
     }
 
-})
+});
 console.log('solverName', solverName);
 console.log('maxdiff', maxdiff);
 console.log('maxdiffk', maxdiffk);
-console.log('maxdiffresulti', maxdiffresulti);
-console.log('maxdiffresultj', maxdiffresultj);
+//console.log('maxdiffresulti', maxdiffresulti);
+//console.log('maxdiffresultj', maxdiffresultj);
 
 //console.log('mindiff', mindiff);
 //console.log('mindiffk', mindiffk);

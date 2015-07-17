@@ -100,13 +100,22 @@ var invokeEmscripten = function(data, callback) {
   });
 };
 
-var getRobotsData = function(callback) {
+var computeInitialRobotsData = function(callback) {
   runCommand('python', ['get_robots_data.py'], callback);
 };
 
+var getRobotsData = function() {
+    var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+
+    robotsData = _.uniq(robotsData, function(robotItem) {
+        return robotItem.robotname + robotItem.manipname;
+    });
+    return robotsData
+}
+
 var rewriteRobotsData = function() {
 
-  var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+  var robotsData = getRobotsData();
 
   var robots = [];
   robotsData.forEach(function(data) {
@@ -124,8 +133,9 @@ var rewriteRobotsData = function() {
   });
 };
 
-//getRobotsData(function() {
-  var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
+//computeInitialRobotsData(function() {
+    var robotsData = getRobotsData()
+
   // async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
     async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
       rewriteRobotsData();
