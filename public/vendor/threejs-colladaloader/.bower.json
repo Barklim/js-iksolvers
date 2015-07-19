@@ -1,0 +1,13 @@
+{
+  "name": "threejs-colladaloader",
+  "_cacheHeaders": {
+    "ETag": "\"3a48ca035a772739e7322e00ec93831fcd5b70a3\"",
+    "Content-Length": "99961",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:3a48ca035",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/Stonelinks/three.js/3e893840e21b6a22ce9488cb7b229dc6e71f959b/examples/js/loaders/ColladaLoader.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/Stonelinks/three.js/3e893840e21b6a22ce9488cb7b229dc6e71f959b/examples/js/loaders/ColladaLoader.js"
+}

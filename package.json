@@ -1,7 +1,7 @@
 {
-  "name": "iksolvers",
+  "name": "ik-iksolvers",
   "version": "0.0.0",
-  "description": "OpenRAVE iksolvers for collada_robots",
+  "description": "OpenRAVE iksolvers for javascript",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/Stonelinks/js-iksolvers",
   "devDependencies": {
-    "async": "^0.9.0",
-    "lodash": "^2.4.1"
+    "async": "0.9.0",
+    "lodash": "2.4.1"
   },
   "dependencies": {
-    "jsonfile": "^2.0.0"
+    "jsonfile": "2.0.0"
   }
 }

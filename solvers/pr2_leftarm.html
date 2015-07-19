@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        #info {
+            color: #fff;
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            display:block;
+
+        }
+
+        a { color: skyblue }
+    </style>
+
+</head>
+<body>
+
+<div id="info">
+    Made with <a href="http://threejs.org" target="_blank">three.js</a> + <a
+        href="http://kripken.github.io/emscripten-site/" target="_blank">emscripten</a> + <a
+        href="http://openrave.org/" target="_blank">openrave</a> by <a
+        href="http://stonelinks.github.io/luke.html" target="_blank">Lucas Doyle</a>
+</div>
+
+<div id="root"></div>
+
+<script src="/public/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/public/vendor/zip/WebContent/zip.js"></script>
+<script src="/public/vendor/zip/WebContent/zip-ext.js"></script>
+<script src="/public/vendor/threejs/build/three.js"></script>
+<script src="/public/vendor/threejs/examples/js/renderers/Projector.js"></script>
+<!--<script src="/public/vendor/threejs/examples/js/loaders/ColladaLoader.js"></script>-->
+<script src="/public/vendor/threejs-colladaloader/index.js"></script>
+<script src="/public/main.js"></script>
+
+<script async type="text/javascript" src="pr2_leftarm.js"></script>
+
+</body>
+</html>

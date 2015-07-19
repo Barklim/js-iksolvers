@@ -55,6 +55,7 @@ var invokeEmscripten = function(data, callback) {
 
   var solverCppPath = basePath + '.cpp';
   var solverJSPath = basePath + '.js';
+  var solverHTMLPath = basePath + '.html';
 
   var tmpCppPath = basePath + '.tmp.cpp';
   var tmpJSPostPath = basePath + '-post.tmp.js';
@@ -88,18 +89,26 @@ var invokeEmscripten = function(data, callback) {
         '-s', 'ASSERTIONS=1',
         '-s', 'NO_EXIT_RUNTIME=1',
         '-s', 'NO_FILESYSTEM=1',
-        '-s', 'NO_BROWSER=1',
+        //'-s', 'NO_BROWSER=1',
         '-s', 'PRECISE_F32=1',
         '-s', 'DEMANGLE_SUPPORT=1',
+
+        // use EXPORT_ALL to figure these functions out
+        // TODO make this a little better by templating it
         // '-s', 'EXPORT_ALL=1',
         '-s', "EXPORTED_FUNCTIONS=['__Z16ComputeFkWrapperPKd', '__Z12GetNumJointsv']",
-        '-o', solverJSPath], function() {
+
+        '--shell-file', 'shell.html',
+
+        '-o', solverHTMLPath
+
+      ], function() {
           try {
             fs.unlinkSync(tmpCppPath);
             fs.unlinkSync(tmpJSPostPath);
           } catch (e) {
           }
-          console.log('Done ' + solverJSPath);
+          console.log('done ' + basePath);
           // process.exit(0)
           callback(null);
         });

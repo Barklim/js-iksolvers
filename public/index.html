@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>js-iksolvers / examples</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        
+        *{
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            background-color: #ffffff;
+            margin: 0px;
+            height: 100%;
+            color: #555;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 15px;
+            line-height: 18px;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            margin-left: 20px;
+            font-size: 20px;
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        a {
+            color: #2194CE;
+            text-decoration: none;
+        }
+
+        #panel {
+            position: fixed;
+            left: 0px;
+            width: 310px;
+            height: 100%;
+            overflow: auto;
+            background: #fafafa;
+        }
+
+        #panel #content {
+            padding: 0px 20px;
+        }
+
+        #panel #content .link {
+            color: #2194CE;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #panel #content .selected {
+            color: #ff0000;
+        }
+
+        #panel #content .link:hover {
+            text-decoration: underline;
+        }
+
+        #viewer {
+            position: absolute;
+            border: 0px;
+            left: 310px;
+            width: calc(100% - 310px);
+            height: 100%;
+            overflow: auto;
+        }
+
+        /* mobile */
+
+        #expandButton {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 12px;
+            width: 32px;
+            height: 32px;
+        }
+
+        #expandButton span {
+            height: 2px;
+            background-color: #2194CE;
+            width: 16px;
+            position: absolute;
+            left: 8px;
+            top: 10px;
+        }
+
+        #expandButton span:nth-child(1) {
+            top: 16px;
+        }
+
+        #expandButton span:nth-child(2) {
+            top: 22px;
+        }
+
+        @media all and ( max-width: 640px ) {
+            h1{
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            #panel{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 480px;
+                width: 100%;
+                right: 0;
+                z-index: 100;
+                overflow: hidden;
+                border-bottom: 1px solid #dedede;
+            }
+            #content{
+                position: absolute;
+                left: 0;
+                top: 60px;
+                right: 0;
+                bottom: 0;
+                font-size: 17px;
+                line-height: 22px;
+                overflow: auto;
+            }
+            #viewer{
+                position: absolute;
+                left: 0;
+                top: 56px;
+                width: 100%;
+                height: calc(100% - 56px);
+            }
+            #expandButton{
+                display: block;
+            }
+            #panel.collapsed{
+                height: 56px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="panel" class="collapsed">
+    <h1><a href="https://github.com/Stonelinks/js-iksolvers">js-iksolvers</a> / examples</h1>
+    <a id="expandButton" href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+    <div id="content"></div>
+</div>
+<iframe id="viewer" allowfullscreen onmousewheel=""></iframe>
+
+<script src="/public/vendor/jquery/dist/jquery.min.js"></script>
+
+<script>
+
+    var panel = document.getElementById( 'panel' );
+    var content = document.getElementById( 'content' );
+    var viewer = document.getElementById( 'viewer' );
+
+    var expandButton = document.getElementById( 'expandButton' );
+    expandButton.addEventListener( 'click', function ( event ) {
+        panel.classList.toggle( 'collapsed' );
+        event.preventDefault();
+    } );
+
+    // iOS8 workaround
+
+    if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
+
+        viewer.addEventListener( 'load', function ( event ) {
+
+            viewer.contentWindow.innerWidth -= 10;
+            viewer.contentWindow.innerHeight -= 2;
+
+        } );
+
+    }
+
+    var container = document.createElement( 'div' );
+    content.appendChild( container );
+
+    var divs = {};
+    var selected = null;
+
+    $(document).ready(function() {
+        $.getJSON('/robots_data.json', function(robotsData) {
+
+            var div = document.createElement( 'h2' );
+            div.textContent = 'Solvers';
+            container.appendChild( div );
+
+            for ( var i = 0; i < robotsData.robots.length; i ++ ) {
+
+                ( function ( robotItem ) {
+
+                    var name = robotItem.robotname + ' / ' + robotItem.manipname;
+
+                    var div = document.createElement( 'div' );
+                    div.className = 'link';
+                    div.textContent = name;
+                    div.addEventListener( 'click', function () {
+
+                        panel.classList.toggle( 'collapsed' );
+                        load( stringFromRobot(robotItem) );
+
+                    } );
+                    container.appendChild( div );
+
+                    divs[ stringFromRobot(robotItem) ] = div;
+
+                } )( robotsData.robots[ i ] );
+
+            }
+
+            var load = function ( robotString ) {
+
+                if ( selected !== null ) divs[ selected ].className = 'link';
+
+                divs[ robotString ].className = 'link selected';
+
+                window.location.hash = robotString;
+                viewer.src = '/solvers/' + robotString + '.html';
+                viewer.focus();
+
+                selected = robotString;
+
+            };
+
+            if ( window.location.hash !== '' ) {
+
+                load( window.location.hash.substring( 1 ) );
+
+            } else {
+
+                var firstRobot = robotsData.robots[0];
+                load(stringFromRobot(firstRobot));
+
+            }
+        })
+    })
+
+    function stringFromRobot(robotItem) {
+        return robotItem.robotname + '_' + robotItem.manipname;
+    }
+</script>
+
+</body>
+</html>
