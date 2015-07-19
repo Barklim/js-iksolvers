@@ -47,20 +47,29 @@ var invokeSolverGenerator = function(data, callback) {
 };
 
 var invokeEmscripten = function(data, callback) {
-  var solverPath = './solvers/';
-  var basePath = solverPath + data.robotname + '_' + data.manipname;
-  var postPath = './post.cpp';
-  var cppPath = basePath + '.cpp';
-  var tmpPath = basePath + '.tmp.cpp';
-  var jsPath = basePath + '.js';
-  fs.exists(cppPath, function(exists) {
+  var solverDir = './solvers/';
+  var basePath = solverDir + data.robotname + '_' + data.manipname;
+
+  var postCppPath = './post.cpp';
+  var postJSPath = './post.js';
+
+  var solverCppPath = basePath + '.cpp';
+  var solverJSPath = basePath + '.js';
+
+  var tmpCppPath = basePath + '.tmp.cpp';
+  var tmpJSPostPath = basePath + '-post.tmp.js';
+
+  fs.exists(solverCppPath, function(exists) {
     if (exists) {
 
-      var cpp = fs.readFileSync(cppPath);
-      var post = fs.readFileSync(postPath);
-      var program = cpp + '\n' + post;
+      var solverCpp = fs.readFileSync(solverCppPath);
+      var postCpp = fs.readFileSync(postCppPath);
+      var cppSolver = solverCpp + '\n' + postCpp;
+      fs.writeFileSync(tmpCppPath, cppSolver);
 
-      fs.writeFileSync(tmpPath, program);
+      var postJS = fs.readFileSync(postJSPath);
+      postJS = 'Module["solverInfo"] = ' + JSON.stringify(data) + ';\n' + postJS;
+      fs.writeFileSync(tmpJSPostPath, postJS);
 
       var cmd = runCommand('em++', [
 
@@ -70,11 +79,11 @@ var invokeEmscripten = function(data, callback) {
         // ikfast
         '-DIKFAST_NO_MAIN',
 
-        tmpPath,
+        tmpCppPath,
 
         // emscripten (https://github.com/kripken/emscripten/blob/1.33.2/src/settings.js)
         '--pre-js', 'pre.js',
-        '--post-js', 'post.js',
+        '--post-js', tmpJSPostPath,
         '-s', 'INVOKE_RUN=0',
         '-s', 'ASSERTIONS=1',
         '-s', 'NO_EXIT_RUNTIME=1',
@@ -84,13 +93,13 @@ var invokeEmscripten = function(data, callback) {
         '-s', 'DEMANGLE_SUPPORT=1',
         // '-s', 'EXPORT_ALL=1',
         '-s', "EXPORTED_FUNCTIONS=['__Z16ComputeFkWrapperPKd', '__Z12GetNumJointsv']",
-
-        '-o', jsPath], function() {
+        '-o', solverJSPath], function() {
           try {
-            fs.unlinkSync(tmpPath);
+            fs.unlinkSync(tmpCppPath);
+            fs.unlinkSync(tmpJSPostPath);
           } catch (e) {
           }
-          console.log('Done ' + jsPath);
+          console.log('Done ' + solverJSPath);
           // process.exit(0)
           callback(null);
         });
@@ -107,11 +116,15 @@ var computeInitialRobotsData = function(callback) {
 var getRobotsData = function() {
     var robotsData = jsonfile.readFileSync(robotsDataFile).robots;
 
+    robotsData = _.filter(robotsData, function(robotItem) {
+      return robotItem.scene.split('.').pop() === 'zae';
+    });
+
     robotsData = _.uniq(robotsData, function(robotItem) {
         return robotItem.robotname + robotItem.manipname;
     });
-    return robotsData
-}
+    return robotsData;
+};
 
 var rewriteRobotsData = function() {
 
@@ -134,7 +147,7 @@ var rewriteRobotsData = function() {
 };
 
 //computeInitialRobotsData(function() {
-    var robotsData = getRobotsData()
+    var robotsData = getRobotsData();
 
   // async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
     async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
