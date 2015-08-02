@@ -1,7 +1,6 @@
 var Module;
 if (!Module) Module = (typeof Module !== 'undefined' ? Module : null) || {};
 
-
 // The environment setup code below is customized to use Module.
 // *** Environment setup code ***
 var ENVIRONMENT_IS_WEB = typeof window === 'object';

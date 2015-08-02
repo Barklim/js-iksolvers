@@ -74,8 +74,8 @@ var invokeEmscripten = function(data, callback) {
 
       var cmd = runCommand('em++', [
 
-        //'-g',
-        '-O2',
+        '-g',
+        //'-O2',
 
         // ikfast
         '-DIKFAST_NO_MAIN',

@@ -2,193 +2,257 @@ zip.workerScriptsPath = '/public/vendor/zip/WebContent/';
 
 var Module = {
     onRuntimeInitialized: function() {
+        var _realStart = function () {
+            var gui = new dat.GUI();
 
-        var gui = new dat.GUI();
+            var Solver = function() {
 
-        var Solver = function() {
+                var self = this;
 
-            var self = this;
+                var container;
 
-            var numJoints = Module.getNumJoints();
+                var camera, scene, renderer;
+                var particleLight;
+                var controls;
+                var dae;
+                var axes;
 
-            var container;
+                this.kinematics = null;
 
-            var camera, scene, renderer;
-            var particleLight;
-            var dae;
+                var _loadCollada = function(url, scale) {
+                    scale = scale || 5.0;
 
-            this.kinematics = null;
+                    var loader = new THREE.ColladaLoader();
+                    loader.options.convertUpAxis = true;
+                    loader.load(url, function(collada ) {
 
-            var _loadCollada = function(url, scale) {
-                scale = scale || 1.0;
+                        dae = collada.scene;
 
-                var loader = new THREE.ColladaLoader();
-                loader.options.convertUpAxis = true;
-                loader.load(url, function(collada ) {
+                        dae.traverse(function(child ) {
 
-                    dae = collada.scene;
+                            if (child instanceof THREE.Mesh) {
 
-                    dae.traverse(function(child ) {
+                                child.geometry.computeFaceNormals();
+                                child.material.shading = THREE.FlatShading;
 
-                        if (child instanceof THREE.Mesh) {
+                            }
 
-                            child.geometry.computeFaceNormals();
-                            child.material.shading = THREE.FlatShading;
+                        });
 
-                        }
+                        dae.scale.x = dae.scale.y = dae.scale.z = scale;
+                        dae.updateMatrix();
+
+                        kinematics = collada.kinematics;
+                        var jointPositions = kinematics.joints.map(function(_, index) {
+                            return kinematics.getJointValue(index)
+                        });
+                        kinematics.joints.forEach(function(joint, i) {
+                            var jointKey = joint.sid;
+                            self[jointKey] = joint.zeroPosition;
+                            self[jointKey + 'Controller'] = gui.add(self, jointKey, joint.limits.min, joint.limits.max).listen();
+                            self[jointKey + 'Controller'].onChange(function(value) {
+                                jointPositions[i] = value;
+                                kinematics.setJointValue(i, value);
+                                var fk = Module.computeFK(jointPositions)
+                                console.log(jointPositions.join(', ') + ' -> ' + fk.matrix.join(', '))
+                                axes.matrix.set.apply(axes.matrix, fk.matrix);
+                                axes.matrix.decompose(axes.position, axes.quaternion, axes.scale);
+                            });
+                        });
+
+                        init();
+                        animate();
+
+                        var currJointIndex = 0;
+                        var sweeper = setInterval(function () {
+                            var joint = kinematics.joints[currJointIndex];
+                            var jointKey = joint.sid;
+
+                            //var bigger = joint.limits.max >= joint.limits.min ? joint.limits.max : joint.limits.min
+                            //var smaller = joint.limits.max <= joint.limits.min ? joint.limits.max : joint.limits.min
+                            //var step = (bigger - smaller) / 500.0
+                            var step = 1.0;
+                            if (self[jointKey] + step > joint.limits.max) {
+                                self[jointKey] = joint.zeroPosition
+                                self[jointKey + 'Controller'].setValue(self[jointKey])
+                                if (currJointIndex == kinematics.joints.length - 1) {
+                                    //clearInterval(sweeper)
+                                    //console.log('done')
+                                    currJointIndex = 0
+                                } else {
+                                    currJointIndex++;
+                                }
+                                joint = kinematics.joints[currJointIndex]
+                                jointKey = joint.sid
+                                self[jointKey] = joint.limits.min;
+                            } else {
+                                self[jointKey] += step;
+                                self[jointKey + 'Controller'].setValue(self[jointKey])
+                            }
+                        }, 20)
 
                     });
+                };
 
-                    dae.scale.x = dae.scale.y = dae.scale.z = 5.0;
-                    dae.updateMatrix();
+                var sceneURL = '/' + Module.solverInfo.scene;
+                var colladaExtension = sceneURL.split('.').pop();
 
-                    kinematics = collada.kinematics;
+                if (colladaExtension == 'dae') {
+                    _loadCollada(sceneURL);
+                } else if (colladaExtension == 'zae') {
+                    zip.createReader(new zip.HttpReader(sceneURL), function(zipReader) {
+                        zipReader.getEntries(function(entries) {
 
-                    for (var i = 0; i < kinematics.joints.length; i++) {
-                        (function(i) {
-                            var joint = kinematics.joints[i];
-                            self['j' + i] = joint.zeroPosition;
-                            var controller = gui.add(self, 'j' + i, joint.limits.min, joint.limits.max);
-                            controller.onChange(function(value) {
-                                kinematics.setJointValue(i, value);
-                            });
-                        })(i);
+                            var hasLoadedCollada = false;
+
+                            if (entries.length) {
+                                entries.forEach(function(entry) {
+                                    if (!hasLoadedCollada && entry.filename.split('.').pop() == 'dae') {
+                                        entry.getData(new zip.BlobWriter('text/plain'), function(data) {
+                                            zipReader.close();
+                                            _loadCollada(URL.createObjectURL(data));
+                                            hasLoadedCollada = true;
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }, function() {
+                        console.warn('Problem loading ' + zaeUrl);
+                    });
+                }
+
+                function init() {
+
+                    container = document.createElement('div');
+                    document.body.appendChild(container);
+
+                    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+                    camera.position.set(17, 10, 17);
+
+                    scene = new THREE.Scene();
+
+                    // Grid
+
+                    var size = 14, step = 1;
+
+                    var geometry = new THREE.Geometry();
+                    var material = new THREE.LineBasicMaterial({ color: 0x303030 });
+
+                    for (var i = - size; i <= size; i += step) {
+
+                        geometry.vertices.push(new THREE.Vector3(- size, - 0.04, i));
+                        geometry.vertices.push(new THREE.Vector3(size, - 0.04, i));
+
+                        geometry.vertices.push(new THREE.Vector3(i, - 0.04, - size));
+                        geometry.vertices.push(new THREE.Vector3(i, - 0.04, size));
+
                     }
 
-                init();
-                animate();
+                    var line = new THREE.Line(geometry, material, THREE.LinePieces);
+                    scene.add(line);
 
-                });
-            };
+                    // Add the COLLADA
 
-            var sceneURL = '/' + Module.solverInfo.scene;
-            var colladaExtension = sceneURL.split('.').pop();
+                    scene.add(dae);
 
-            if (colladaExtension == 'dae') {
-                _loadCollada(sceneURL);
-            } else if (colladaExtension == 'zae') {
-                zip.createReader(new zip.HttpReader(sceneURL), function(zipReader) {
-                    zipReader.getEntries(function(entries) {
+                    particleLight = new THREE.Mesh(new THREE.SphereGeometry(4, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+                    scene.add(particleLight);
 
-                        var hasLoadedCollada = false;
+                    axes = new THREE.AxisHelper( 5 );
+                    scene.add(axes)
 
-                        if (entries.length) {
-                            entries.forEach(function(entry) {
-                                if (!hasLoadedCollada && entry.filename.split('.').pop() == 'dae') {
-                                    entry.getData(new zip.BlobWriter('text/plain'), function(data) {
-                                        zipReader.close();
-                                        _loadCollada(URL.createObjectURL(data));
-                                        hasLoadedCollada = true;
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }, function() {
-                    console.warn('Drawable: problem loading ' + zaeUrl);
-                });
-            }
+                    // Lights
 
-            function init() {
+                    var directionalLight = new THREE.HemisphereLight(0xffeeee, 0x111122);
+                    directionalLight.position.x = Math.random() - 0.5;
+                    directionalLight.position.y = Math.random() - 0.5;
+                    directionalLight.position.z = Math.random() - 0.5;
+                    directionalLight.position.normalize();
+                    scene.add(directionalLight);
 
-                container = document.createElement('div');
-                document.body.appendChild(container);
+                    var pointLight = new THREE.PointLight(0xffffff, 0.5);
+                    particleLight.add(pointLight);
 
-                camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
-                camera.position.set(2, 2, 3);
+                    renderer = new THREE.WebGLRenderer();
+                    renderer.setPixelRatio(window.devicePixelRatio);
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    container.appendChild(renderer.domElement);
 
-                scene = new THREE.Scene();
+                    camera.lookAt(scene.position);
+                    controls = new THREE.TrackballControls( camera, renderer.domElement );
 
-                // Grid
+                    controls.rotateSpeed = 1.0;
+                    controls.zoomSpeed = 1.2;
+                    controls.panSpeed = 0.8;
 
-                var size = 14, step = 1;
+                    controls.noZoom = false;
+                    controls.noPan = false;
 
-                var geometry = new THREE.Geometry();
-                var material = new THREE.LineBasicMaterial({ color: 0x303030 });
+                    controls.staticMoving = true;
+                    controls.dynamicDampingFactor = 0.3;
 
-                for (var i = - size; i <= size; i += step) {
+                    //controls.keys = [ 65, 83, 68 ];
 
-                    geometry.vertices.push(new THREE.Vector3(- size, - 0.04, i));
-                    geometry.vertices.push(new THREE.Vector3(size, - 0.04, i));
+                    controls.addEventListener( 'change', render );
 
-                    geometry.vertices.push(new THREE.Vector3(i, - 0.04, - size));
-                    geometry.vertices.push(new THREE.Vector3(i, - 0.04, size));
+
+
+                    window.addEventListener('resize', onWindowResize, false);
 
                 }
 
-                var line = new THREE.Line(geometry, material, THREE.LinePieces);
-                scene.add(line);
+                function onWindowResize() {
 
-                // Add the COLLADA
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
 
-                scene.add(dae);
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    controls.handleResize();
 
-                particleLight = new THREE.Mesh(new THREE.SphereGeometry(4, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-                scene.add(particleLight);
-
-                // Lights
-
-                var directionalLight = new THREE.HemisphereLight(0xffeeee, 0x111122);
-                directionalLight.position.x = Math.random() - 0.5;
-                directionalLight.position.y = Math.random() - 0.5;
-                directionalLight.position.z = Math.random() - 0.5;
-                directionalLight.position.normalize();
-                scene.add(directionalLight);
-
-                var pointLight = new THREE.PointLight(0xffffff, 0.5);
-                particleLight.add(pointLight);
-
-                renderer = new THREE.WebGLRenderer();
-                renderer.setPixelRatio(window.devicePixelRatio);
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                container.appendChild(renderer.domElement);
-
+                }
 
                 //
 
-                window.addEventListener('resize', onWindowResize, false);
+                function animate() {
 
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    render();
+
+                }
+
+                function render() {
+
+                    var timer = Date.now() * 0.0001;
+
+                    //camera.position.x = Math.cos(timer) * 17;
+                    //camera.position.y = 10;
+                    //camera.position.z = Math.sin(timer) * 17;
+
+                    //camera.lookAt(scene.position);
+
+                    particleLight.position.x = Math.sin(timer * 4) * 3009;
+                    particleLight.position.y = Math.cos(timer * 5) * 4000;
+                    particleLight.position.z = Math.cos(timer * 4) * 3009;
+
+                    renderer.render(scene, camera);
+
+                }
+
+            };
+
+            var s = new Solver();
+        }
+
+        var fuck = setInterval(function () {
+            if (window.Module) {
+                console.log('here it is')
+                clearInterval(fuck)
+                _realStart()
+            } else {
+                console.log('where is my solver')
             }
-
-            function onWindowResize() {
-
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-
-                renderer.setSize(window.innerWidth, window.innerHeight);
-
-            }
-
-            //
-
-            function animate() {
-
-                requestAnimationFrame(animate);
-
-                render();
-
-            }
-
-            function render() {
-
-                var timer = Date.now() * 0.0001;
-
-                camera.position.x = Math.cos(timer) * 17;
-                camera.position.y = 10;
-                camera.position.z = Math.sin(timer) * 17;
-
-                camera.lookAt(scene.position);
-
-                particleLight.position.x = Math.sin(timer * 4) * 3009;
-                particleLight.position.y = Math.cos(timer * 5) * 4000;
-                particleLight.position.z = Math.cos(timer * 4) * 3009;
-
-                renderer.render(scene, camera);
-
-            }
-
-        };
-
-        var s = new Solver();
+        }, 500)
     }
 };
