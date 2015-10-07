@@ -8,13 +8,13 @@ jsonfile.spaces = 2;
 var robotsDataFile = 'robots_data.json';
 
 var numCores = require('os').cpus().length;
-var numJobs = parseInt(numCores / 2);
-// var numJobs = 1;
+//var numJobs = parseInt(numCores / 2);
+ var numJobs = 7;
 console.log('numJobs', numJobs);
 
 var runCommand = function(command, args, callback, _timeout) {
-  // _timeout = _timeout || 12 * 60 * 60 * 1000; // 12 hours
-  _timeout = _timeout || 30 * 60 * 1000; // 30 minutes
+   _timeout = _timeout || 5 * 60 * 60 * 1000; // hours
+  //_timeout = _timeout || 30 * 60 * 1000; // 30 minutes
 
   var cmd = spawn(command, args);
 
@@ -155,13 +155,13 @@ var rewriteRobotsData = function() {
   });
 };
 
-//computeInitialRobotsData(function() {
+computeInitialRobotsData(function() {
     var robotsData = getRobotsData();
 
-  // async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
+   async.eachLimit(robotsData, numJobs, invokeSolverGenerator, function() {
     async.eachLimit(robotsData, numJobs, invokeEmscripten, function() {
       rewriteRobotsData();
       console.log('done');
     });
-  // });
-//});
+   });
+});
