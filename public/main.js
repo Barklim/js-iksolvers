@@ -1,11 +1,11 @@
 zip.workerScriptsPath = '/public/vendor/zip/WebContent/';
 
 var Module = {
-    onRuntimeInitialized: function() {
+    onRuntimeInitialized: function () {
         var _realStart = function () {
             var gui = new dat.GUI();
 
-            var Solver = function() {
+            var Solver = function () {
 
                 var self = this;
 
@@ -19,16 +19,16 @@ var Module = {
 
                 this.kinematics = null;
 
-                var _loadCollada = function(url, scale) {
+                var _loadCollada = function (url, scale) {
                     scale = scale || 5.0;
 
                     var loader = new THREE.ColladaLoader();
                     loader.options.convertUpAxis = true;
-                    loader.load(url, function(collada ) {
+                    loader.load(url, function (collada) {
 
                         dae = collada.scene;
 
-                        dae.traverse(function(child ) {
+                        dae.traverse(function (child) {
 
                             if (child instanceof THREE.Mesh) {
 
@@ -43,14 +43,14 @@ var Module = {
                         dae.updateMatrix();
 
                         kinematics = collada.kinematics;
-                        var jointPositions = kinematics.joints.map(function(_, index) {
+                        var jointPositions = kinematics.joints.map(function (_, index) {
                             return kinematics.getJointValue(index)
                         });
-                        kinematics.joints.forEach(function(joint, i) {
+                        kinematics.joints.forEach(function (joint, i) {
                             var jointKey = joint.sid;
                             self[jointKey] = joint.zeroPosition;
                             self[jointKey + 'Controller'] = gui.add(self, jointKey, joint.limits.min, joint.limits.max).listen();
-                            self[jointKey + 'Controller'].onChange(function(value) {
+                            self[jointKey + 'Controller'].onChange(function (value) {
                                 jointPositions[i] = value;
                                 kinematics.setJointValue(i, value);
                                 var fk = Module.computeFK(jointPositions)
@@ -100,15 +100,15 @@ var Module = {
                 if (colladaExtension == 'dae') {
                     _loadCollada(sceneURL);
                 } else if (colladaExtension == 'zae') {
-                    zip.createReader(new zip.HttpReader(sceneURL), function(zipReader) {
-                        zipReader.getEntries(function(entries) {
+                    zip.createReader(new zip.HttpReader(sceneURL), function (zipReader) {
+                        zipReader.getEntries(function (entries) {
 
                             var hasLoadedCollada = false;
 
                             if (entries.length) {
-                                entries.forEach(function(entry) {
+                                entries.forEach(function (entry) {
                                     if (!hasLoadedCollada && entry.filename.split('.').pop() == 'dae') {
-                                        entry.getData(new zip.BlobWriter('text/plain'), function(data) {
+                                        entry.getData(new zip.BlobWriter('text/plain'), function (data) {
                                             zipReader.close();
                                             _loadCollada(URL.createObjectURL(data));
                                             hasLoadedCollada = true;
@@ -117,7 +117,7 @@ var Module = {
                                 });
                             }
                         });
-                    }, function() {
+                    }, function () {
                         console.warn('Problem loading ' + zaeUrl);
                     });
                 }
@@ -137,15 +137,15 @@ var Module = {
                     var size = 14, step = 1;
 
                     var geometry = new THREE.Geometry();
-                    var material = new THREE.LineBasicMaterial({ color: 0x303030 });
+                    var material = new THREE.LineBasicMaterial({color: 0x303030});
 
-                    for (var i = - size; i <= size; i += step) {
+                    for (var i = -size; i <= size; i += step) {
 
-                        geometry.vertices.push(new THREE.Vector3(- size, - 0.04, i));
-                        geometry.vertices.push(new THREE.Vector3(size, - 0.04, i));
+                        geometry.vertices.push(new THREE.Vector3(-size, -0.04, i));
+                        geometry.vertices.push(new THREE.Vector3(size, -0.04, i));
 
-                        geometry.vertices.push(new THREE.Vector3(i, - 0.04, - size));
-                        geometry.vertices.push(new THREE.Vector3(i, - 0.04, size));
+                        geometry.vertices.push(new THREE.Vector3(i, -0.04, -size));
+                        geometry.vertices.push(new THREE.Vector3(i, -0.04, size));
 
                     }
 
@@ -156,10 +156,10 @@ var Module = {
 
                     scene.add(dae);
 
-                    particleLight = new THREE.Mesh(new THREE.SphereGeometry(4, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+                    particleLight = new THREE.Mesh(new THREE.SphereGeometry(4, 8, 8), new THREE.MeshBasicMaterial({color: 0xffffff}));
                     scene.add(particleLight);
 
-                    axes = new THREE.AxisHelper( 5 );
+                    axes = new THREE.AxisHelper(5);
                     scene.add(axes)
 
                     // Lights
@@ -180,7 +180,7 @@ var Module = {
                     container.appendChild(renderer.domElement);
 
                     camera.lookAt(scene.position);
-                    controls = new THREE.TrackballControls( camera, renderer.domElement );
+                    controls = new THREE.TrackballControls(camera, renderer.domElement);
 
                     controls.rotateSpeed = 1.0;
                     controls.zoomSpeed = 1.2;
@@ -194,8 +194,7 @@ var Module = {
 
                     //controls.keys = [ 65, 83, 68 ];
 
-                    controls.addEventListener( 'change', render );
-
+                    controls.addEventListener('change', render);
 
 
                     window.addEventListener('resize', onWindowResize, false);

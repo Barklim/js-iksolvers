@@ -34,7 +34,7 @@ solvers.solverIds.forEach(function(solverId) {
 
         try {
             var j = makeArray(numJoints);
-            var ret = solver.ccall('_Z16ComputeFkWrapperPKd', 'string', ['array'], [j]);
+            var ret = solver.ccall('_ComputeFk', 'string', ['array'], [j]);
             var newret = ret.split(',').map(parseFloat);
             results.push({
                 result: newret,

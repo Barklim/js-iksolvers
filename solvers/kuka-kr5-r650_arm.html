@@ -48,7 +48,26 @@
 <!--<script src="/public/vendor/threejs-colladaloader/index.js"></script>-->
 <script src="/public/main.js"></script>
 
-<script async type="text/javascript" src="kuka-kr5-r650_arm.js"></script>
+<script>
+
+        (function() {
+          var memoryInitializer = 'kuka-kr5-r650_arm.html.mem';
+          if (typeof Module['locateFile'] === 'function') {
+            memoryInitializer = Module['locateFile'](memoryInitializer);
+          } else if (Module['memoryInitializerPrefixURL']) {
+            memoryInitializer = Module['memoryInitializerPrefixURL'] + memoryInitializer;
+          }
+          var xhr = Module['memoryInitializerRequest'] = new XMLHttpRequest();
+          xhr.open('GET', memoryInitializer, true);
+          xhr.responseType = 'arraybuffer';
+          xhr.send(null);
+        })();
+
+        var script = document.createElement('script');
+        script.src = "kuka-kr5-r650_arm.js";
+        document.body.appendChild(script);
+
+</script>
 
 </body>
 </html>

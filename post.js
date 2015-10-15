@@ -1,12 +1,12 @@
-Module.getNumJoints = Module.cwrap('_Z12GetNumJointsv', 'int');
+Module.getNumJoints = Module.cwrap('_GetNumJoints', 'int');
 
-var _ComputeFK = Module.cwrap('_Z16ComputeFkWrapperPKd', 'string', ['array']);
+var _ComputeFk = Module.cwrap('_ComputeFk', 'string', ['array']);
 Module.computeFK = function (jointAngleArray) {
     if (Module.getNumJoints() != jointAngleArray.length) {
         console.warn('input array should have length ' + Module.getNumJoints() + ', truncating input'),
         jointAngleArray = jointAngleArray.slice(0, jointAngleArray.length)
     }
-    var raw = _ComputeFK(jointAngleArray).split(',').map(parseFloat);
+    var raw = _ComputeFk(jointAngleArray).split(',').map(parseFloat);
     var trans = raw.slice(0, 3);
     var rot = raw.slice(3, 3 + 9);
 

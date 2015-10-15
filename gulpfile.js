@@ -95,13 +95,17 @@ var invokeEmscripten = function (data, callback) {
             postJS = 'Module["solverInfo"] = ' + JSON.stringify(data) + ';\n' + postJS;
             fs.writeFileSync(tmpJSPostPath, postJS);
 
-            var cmd = runCommand('em++', [
+            runCommand('em++', [
 
-                '-g',
-                //'-O2',
+                //'-g',
+                '-O2',
+
+                // headers
+                '-I./headers',
 
                 // ikfast
                 '-DIKFAST_NO_MAIN',
+                '-DIKFAST_CLIBRARY',
 
                 tmpCppPath,
 
@@ -112,14 +116,14 @@ var invokeEmscripten = function (data, callback) {
                 '-s', 'ASSERTIONS=1',
                 '-s', 'NO_EXIT_RUNTIME=1',
                 '-s', 'NO_FILESYSTEM=1',
-                //'-s', 'NO_BROWSER=1',
+                '-s', 'NO_BROWSER=1',
+                '-s', 'PRECISE_I64_MATH=2',
                 '-s', 'PRECISE_F32=1',
-                '-s', 'DEMANGLE_SUPPORT=1',
 
                 // use EXPORT_ALL to figure these functions out
-                // TODO make this a little better by templating it
                 // '-s', 'EXPORT_ALL=1',
-                '-s', "EXPORTED_FUNCTIONS=['__Z16ComputeFkWrapperPKd', '__Z12GetNumJointsv']",
+                // '-s', 'LINKABLE=1',
+                //'-s', "EXPORTED_FUNCTIONS=['_GetNumJoints']",
 
                 '--shell-file', 'shell.html',
 
