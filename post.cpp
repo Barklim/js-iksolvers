@@ -1,23 +1,32 @@
+#import <iostream>
 #include "emscripten.h"
 
 extern "C" {
 
 int EMSCRIPTEN_KEEPALIVE _GetNumJoints() {
-      return GetNumJoints();
+    return GetNumJoints();
 }
 
-char* EMSCRIPTEN_KEEPALIVE _ComputeFk(const IkReal* j) {
+char* EMSCRIPTEN_KEEPALIVE _ComputeFk(const IkReal* j, int length) {
+    std::cout << "cpp: ";
+    for (int i = 0; i < length; i++)
+        std::cout << j[i] << ", ";
+    std::cout << std::endl;
+
     IkReal eetrans[3] = {0};
     IkReal eerot[9] = {0};
     char buffer [256] = {0};
     ComputeFk(j, eetrans, eerot);
+    sprintf(buffer + strlen(buffer), "[");
     for(int i = 0; i < 3; ++i)
         sprintf(buffer + strlen(buffer), "%.15f,", eetrans[i]);
     for(int i = 0; i < 9 - 1; ++i)
         sprintf(buffer + strlen(buffer), "%.15f,", eerot[i]);
     sprintf(buffer + strlen(buffer), "%.15f", eerot[9 - 1]);
+    sprintf(buffer + strlen(buffer), "]");
     return buffer;
 }
+
 //
 //std::vector<IkReal> TrueComputeIk(int argc, char** argv) {
 //    std::vector<IkReal> solvalues(GetNumJoints());

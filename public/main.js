@@ -53,10 +53,10 @@ var Module = {
                             self[jointKey + 'Controller'].onChange(function (value) {
                                 jointPositions[i] = value;
                                 kinematics.setJointValue(i, value);
-                                var fk = Module.computeFK(jointPositions)
-                                console.log(jointPositions.join(', ') + ' -> ' + fk.matrix.join(', '))
-                                axes.matrix.set.apply(axes.matrix, fk.matrix);
-                                axes.matrix.decompose(axes.position, axes.quaternion, axes.scale);
+                                var fk = Module.ComputeFk(jointPositions)
+                                //console.log(fk.raw)
+                                //axes.matrix.set.apply(axes.matrix, fk.matrix);
+                                //axes.matrix.decompose(axes.position, axes.quaternion, axes.scale);
                             });
                         });
 
@@ -76,9 +76,9 @@ var Module = {
                                 self[jointKey] = joint.zeroPosition
                                 self[jointKey + 'Controller'].setValue(self[jointKey])
                                 if (currJointIndex == kinematics.joints.length - 1) {
-                                    //clearInterval(sweeper)
-                                    //console.log('done')
-                                    currJointIndex = 0
+                                    clearInterval(sweeper)
+                                    console.log('done')
+                                    //currJointIndex = 0
                                 } else {
                                     currJointIndex++;
                                 }

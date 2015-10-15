@@ -15,7 +15,7 @@ solvers.solverIds.forEach(function(solverId) {
     console.log('solverId', solverId);
     var solver = solvers.getSolver(solverId);
 
-    var numJoints = solver.getNumJoints();
+    var numJoints = solver.GetNumJoints();
 
     var tries = 3000;
 

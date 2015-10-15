@@ -31,8 +31,7 @@ var path = {
 };
 
 var numCores = require('os').cpus().length;
-//var numJobs = parseInt(numCores / 2);
-var numJobs = 7;
+var numJobs = parseInt(numCores) - 1;
 console.log('numJobs', numJobs);
 
 var runCommand = function (command, args, callback, _timeout) {
@@ -97,8 +96,8 @@ var invokeEmscripten = function (data, callback) {
 
             runCommand('em++', [
 
-                //'-g',
-                '-O2',
+                '-g',
+                //'-O2',
 
                 // headers
                 '-I./headers',
@@ -119,11 +118,6 @@ var invokeEmscripten = function (data, callback) {
                 '-s', 'NO_BROWSER=1',
                 '-s', 'PRECISE_I64_MATH=2',
                 '-s', 'PRECISE_F32=1',
-
-                // use EXPORT_ALL to figure these functions out
-                // '-s', 'EXPORT_ALL=1',
-                // '-s', 'LINKABLE=1',
-                //'-s', "EXPORTED_FUNCTIONS=['_GetNumJoints']",
 
                 '--shell-file', 'shell.html',
 

@@ -1,10 +1,10 @@
 {
   "robots": [
     {
-      "robotname": "kuka-kr5-r650",
+      "robotname": "WAM7",
       "manipname": "arm",
-      "scene": "robots/kuka-kr5-r650.zae",
-      "basePath": "./solvers/kuka-kr5-r650_arm"
+      "scene": "robots/barrett-wam.zae",
+      "basePath": "./solvers/WAM7_arm"
     }
   ]
 }
