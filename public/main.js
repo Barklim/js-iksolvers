@@ -53,17 +53,17 @@ var Module = {
                             self[jointKey + 'Controller'].onChange(function (value) {
                                 jointPositions[i] = value;
                                 kinematics.setJointValue(i, value);
-                                var fk = Module.ComputeFk(jointPositions)
+                                var fk = Module.ComputeFk(jointPositions);
                                 //console.log(fk.raw)
-                                //axes.matrix.set.apply(axes.matrix, fk.matrix);
-                                //axes.matrix.decompose(axes.position, axes.quaternion, axes.scale);
+                                axes.matrix.set.apply(axes.matrix, fk.matrix);
+                                axes.matrix.decompose(axes.position, axes.quaternion, axes.scale);
                             });
                         });
 
                         init();
                         animate();
 
-                        var currJointIndex = 0;
+                        var currJointIndex = 1;
                         var sweeper = setInterval(function () {
                             var joint = kinematics.joints[currJointIndex];
                             var jointKey = joint.sid;
@@ -71,26 +71,25 @@ var Module = {
                             //var bigger = joint.limits.max >= joint.limits.min ? joint.limits.max : joint.limits.min
                             //var smaller = joint.limits.max <= joint.limits.min ? joint.limits.max : joint.limits.min
                             //var step = (bigger - smaller) / 500.0
-                            var step = 1.0;
+                            var step = 0.1;
                             if (self[jointKey] + step > joint.limits.max) {
-                                self[jointKey] = joint.zeroPosition
-                                self[jointKey + 'Controller'].setValue(self[jointKey])
+                                self[jointKey] = joint.zeroPosition;
+                                self[jointKey + 'Controller'].setValue(self[jointKey]);
                                 if (currJointIndex == kinematics.joints.length - 1) {
-                                    clearInterval(sweeper)
-                                    console.log('done')
+                                    clearInterval(sweeper);
+                                    console.log('done');
                                     //currJointIndex = 0
                                 } else {
                                     currJointIndex++;
                                 }
-                                joint = kinematics.joints[currJointIndex]
-                                jointKey = joint.sid
+                                joint = kinematics.joints[currJointIndex];
+                                jointKey = joint.sid;
                                 self[jointKey] = joint.limits.min;
                             } else {
                                 self[jointKey] += step;
                                 self[jointKey + 'Controller'].setValue(self[jointKey])
                             }
-                        }, 20)
-
+                        }, 5)
                     });
                 };
 
@@ -160,7 +159,7 @@ var Module = {
                     scene.add(particleLight);
 
                     axes = new THREE.AxisHelper(5);
-                    scene.add(axes)
+                    scene.add(axes);
 
                     // Lights
 
@@ -242,12 +241,12 @@ var Module = {
             };
 
             var s = new Solver();
-        }
+        };
 
         var fuck = setInterval(function () {
             if (window.Module) {
-                console.log('here it is')
-                clearInterval(fuck)
+                console.log('here it is');
+                clearInterval(fuck);
                 _realStart()
             } else {
                 console.log('where is my solver')

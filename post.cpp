@@ -1,4 +1,9 @@
-#import <iostream>
+#include <iterator>   // istream_iterator, back_inserter
+#include <sstream>    // istringstream
+#include <string>
+#include <vector>
+#include <iostream>
+#include <string>
 #include "emscripten.h"
 
 extern "C" {
@@ -7,10 +12,18 @@ int EMSCRIPTEN_KEEPALIVE _GetNumJoints() {
     return GetNumJoints();
 }
 
-char* EMSCRIPTEN_KEEPALIVE _ComputeFk(const IkReal* j, int length) {
+char* EMSCRIPTEN_KEEPALIVE _ComputeFk(char* input, int length) {
+
+    IkReal j[100] = {0};
+
+    // conversion here:
+    std::istringstream ss(input);
+    copy(std::istream_iterator <float> (ss), std::istream_iterator <float> (), j);
+
     std::cout << "cpp: ";
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i < length; i++) {
         std::cout << j[i] << ", ";
+    }
     std::cout << std::endl;
 
     IkReal eetrans[3] = {0};
@@ -18,10 +31,12 @@ char* EMSCRIPTEN_KEEPALIVE _ComputeFk(const IkReal* j, int length) {
     char buffer [256] = {0};
     ComputeFk(j, eetrans, eerot);
     sprintf(buffer + strlen(buffer), "[");
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i) {
         sprintf(buffer + strlen(buffer), "%.15f,", eetrans[i]);
-    for(int i = 0; i < 9 - 1; ++i)
+    }
+    for(int i = 0; i < 9 - 1; ++i) {
         sprintf(buffer + strlen(buffer), "%.15f,", eerot[i]);
+    }
     sprintf(buffer + strlen(buffer), "%.15f", eerot[9 - 1]);
     sprintf(buffer + strlen(buffer), "]");
     return buffer;

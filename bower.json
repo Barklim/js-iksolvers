@@ -15,10 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "zip": "https://github.com/gildas-lormeau/zip.js.git#4c93974e90",
-    "threejs-colladaloader": "https://raw.githubusercontent.com/Stonelinks/three.js/3e893840e21b6a22ce9488cb7b229dc6e71f959b/examples/js/loaders/ColladaLoader.js",
-    "threejs": "#d6384d203f",
+    "dat.gui": "*",
     "jquery": "~2.1.4",
-    "dat.gui": "*"
+    "smoothie": "~1.27.0",
+    "threejs": "#d6384d203f",
+    "threejs-colladaloader": "https://raw.githubusercontent.com/Stonelinks/three.js/3e893840e21b6a22ce9488cb7b229dc6e71f959b/examples/js/loaders/ColladaLoader.js",
+    "zip": "https://github.com/gildas-lormeau/zip.js.git#4c93974e90"
   }
 }
